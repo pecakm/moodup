@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D0533D4A1ECF6B12004FD73F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D491ECF6B12004FD73F /* AppDelegate.swift */; };
+		D0533D4C1ECF6B12004FD73F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D4B1ECF6B12004FD73F /* ViewController.swift */; };
+		D0533D4F1ECF6B12004FD73F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0533D4D1ECF6B12004FD73F /* Main.storyboard */; };
+		D0533D511ECF6B12004FD73F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0533D501ECF6B12004FD73F /* Assets.xcassets */; };
+		D0533D541ECF6B12004FD73F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */; };
+		D0533D5F1ECF6B12004FD73F /* MoodUp_TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D5E1ECF6B12004FD73F /* MoodUp_TaskTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D0533D5B1ECF6B12004FD73F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0533D3E1ECF6B11004FD73F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0533D451ECF6B11004FD73F;
+			remoteInfo = "MoodUp Task";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D0533D461ECF6B12004FD73F /* MoodUp Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoodUp Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0533D491ECF6B12004FD73F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D0533D4B1ECF6B12004FD73F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D0533D4E1ECF6B12004FD73F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D0533D501ECF6B12004FD73F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0533D531ECF6B12004FD73F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D0533D551ECF6B12004FD73F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0533D5A1ECF6B12004FD73F /* MoodUp TaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoodUp TaskTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0533D5E1ECF6B12004FD73F /* MoodUp_TaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodUp_TaskTests.swift; sourceTree = "<group>"; };
+		D0533D601ECF6B12004FD73F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D0533D431ECF6B11004FD73F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0533D571ECF6B12004FD73F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D0533D3D1ECF6B11004FD73F = {
+			isa = PBXGroup;
+			children = (
+				D0533D481ECF6B12004FD73F /* MoodUp Task */,
+				D0533D5D1ECF6B12004FD73F /* MoodUp TaskTests */,
+				D0533D471ECF6B12004FD73F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D0533D471ECF6B12004FD73F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D0533D461ECF6B12004FD73F /* MoodUp Task.app */,
+				D0533D5A1ECF6B12004FD73F /* MoodUp TaskTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D0533D481ECF6B12004FD73F /* MoodUp Task */ = {
+			isa = PBXGroup;
+			children = (
+				D0533D491ECF6B12004FD73F /* AppDelegate.swift */,
+				D0533D4B1ECF6B12004FD73F /* ViewController.swift */,
+				D0533D4D1ECF6B12004FD73F /* Main.storyboard */,
+				D0533D501ECF6B12004FD73F /* Assets.xcassets */,
+				D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */,
+				D0533D551ECF6B12004FD73F /* Info.plist */,
+			);
+			path = "MoodUp Task";
+			sourceTree = "<group>";
+		};
+		D0533D5D1ECF6B12004FD73F /* MoodUp TaskTests */ = {
+			isa = PBXGroup;
+			children = (
+				D0533D5E1ECF6B12004FD73F /* MoodUp_TaskTests.swift */,
+				D0533D601ECF6B12004FD73F /* Info.plist */,
+			);
+			path = "MoodUp TaskTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D0533D451ECF6B11004FD73F /* MoodUp Task */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0533D631ECF6B12004FD73F /* Build configuration list for PBXNativeTarget "MoodUp Task" */;
+			buildPhases = (
+				D0533D421ECF6B11004FD73F /* Sources */,
+				D0533D431ECF6B11004FD73F /* Frameworks */,
+				D0533D441ECF6B11004FD73F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MoodUp Task";
+			productName = "MoodUp Task";
+			productReference = D0533D461ECF6B12004FD73F /* MoodUp Task.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D0533D591ECF6B12004FD73F /* MoodUp TaskTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0533D661ECF6B12004FD73F /* Build configuration list for PBXNativeTarget "MoodUp TaskTests" */;
+			buildPhases = (
+				D0533D561ECF6B12004FD73F /* Sources */,
+				D0533D571ECF6B12004FD73F /* Frameworks */,
+				D0533D581ECF6B12004FD73F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0533D5C1ECF6B12004FD73F /* PBXTargetDependency */,
+			);
+			name = "MoodUp TaskTests";
+			productName = "MoodUp TaskTests";
+			productReference = D0533D5A1ECF6B12004FD73F /* MoodUp TaskTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D0533D3E1ECF6B11004FD73F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Mikołaj Pęcak";
+				TargetAttributes = {
+					D0533D451ECF6B11004FD73F = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					D0533D591ECF6B12004FD73F = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D0533D451ECF6B11004FD73F;
+					};
+				};
+			};
+			buildConfigurationList = D0533D411ECF6B11004FD73F /* Build configuration list for PBXProject "MoodUp Task" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D0533D3D1ECF6B11004FD73F;
+			productRefGroup = D0533D471ECF6B12004FD73F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D0533D451ECF6B11004FD73F /* MoodUp Task */,
+				D0533D591ECF6B12004FD73F /* MoodUp TaskTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D0533D441ECF6B11004FD73F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0533D541ECF6B12004FD73F /* LaunchScreen.storyboard in Resources */,
+				D0533D511ECF6B12004FD73F /* Assets.xcassets in Resources */,
+				D0533D4F1ECF6B12004FD73F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0533D581ECF6B12004FD73F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D0533D421ECF6B11004FD73F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0533D4C1ECF6B12004FD73F /* ViewController.swift in Sources */,
+				D0533D4A1ECF6B12004FD73F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0533D561ECF6B12004FD73F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0533D5F1ECF6B12004FD73F /* MoodUp_TaskTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D0533D5C1ECF6B12004FD73F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0533D451ECF6B11004FD73F /* MoodUp Task */;
+			targetProxy = D0533D5B1ECF6B12004FD73F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D0533D4D1ECF6B12004FD73F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0533D4E1ECF6B12004FD73F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0533D531ECF6B12004FD73F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D0533D611ECF6B12004FD73F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0533D621ECF6B12004FD73F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D0533D641ECF6B12004FD73F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "MoodUp Task/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.MoodUp-Task";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D0533D651ECF6B12004FD73F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "MoodUp Task/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.MoodUp-Task";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		D0533D671ECF6B12004FD73F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "MoodUp TaskTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.MoodUp-TaskTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoodUp Task.app/MoodUp Task";
+			};
+			name = Debug;
+		};
+		D0533D681ECF6B12004FD73F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "MoodUp TaskTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.MoodUp-TaskTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoodUp Task.app/MoodUp Task";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D0533D411ECF6B11004FD73F /* Build configuration list for PBXProject "MoodUp Task" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0533D611ECF6B12004FD73F /* Debug */,
+				D0533D621ECF6B12004FD73F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0533D631ECF6B12004FD73F /* Build configuration list for PBXNativeTarget "MoodUp Task" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0533D641ECF6B12004FD73F /* Debug */,
+				D0533D651ECF6B12004FD73F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D0533D661ECF6B12004FD73F /* Build configuration list for PBXNativeTarget "MoodUp TaskTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0533D671ECF6B12004FD73F /* Debug */,
+				D0533D681ECF6B12004FD73F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D0533D3E1ECF6B11004FD73F /* Project object */;
+}
