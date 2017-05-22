@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AB95EF5FCAF8E7F3B7165F3 /* Pods_MoodUp_Task.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86B00FCF2C1110343DED5D07 /* Pods_MoodUp_Task.framework */; };
 		D0533D4A1ECF6B12004FD73F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D491ECF6B12004FD73F /* AppDelegate.swift */; };
-		D0533D4C1ECF6B12004FD73F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D4B1ECF6B12004FD73F /* ViewController.swift */; };
+		D0533D4C1ECF6B12004FD73F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D4B1ECF6B12004FD73F /* MainViewController.swift */; };
 		D0533D4F1ECF6B12004FD73F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0533D4D1ECF6B12004FD73F /* Main.storyboard */; };
 		D0533D511ECF6B12004FD73F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0533D501ECF6B12004FD73F /* Assets.xcassets */; };
 		D0533D541ECF6B12004FD73F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */; };
@@ -26,9 +27,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3411C6A73CB0BE2BDDA22696 /* Pods-MoodUp Task.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodUp Task.release.xcconfig"; path = "Pods/Target Support Files/Pods-MoodUp Task/Pods-MoodUp Task.release.xcconfig"; sourceTree = "<group>"; };
+		86B00FCF2C1110343DED5D07 /* Pods_MoodUp_Task.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoodUp_Task.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3FAF4D4C246291AAB379F73 /* Pods-MoodUp Task.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodUp Task.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MoodUp Task/Pods-MoodUp Task.debug.xcconfig"; sourceTree = "<group>"; };
 		D0533D461ECF6B12004FD73F /* MoodUp Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoodUp Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0533D491ECF6B12004FD73F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D0533D4B1ECF6B12004FD73F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D0533D4B1ECF6B12004FD73F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D0533D4E1ECF6B12004FD73F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D0533D501ECF6B12004FD73F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0533D531ECF6B12004FD73F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB95EF5FCAF8E7F3B7165F3 /* Pods_MoodUp_Task.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,12 +61,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21BF792A6D99925C74397201 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B3FAF4D4C246291AAB379F73 /* Pods-MoodUp Task.debug.xcconfig */,
+				3411C6A73CB0BE2BDDA22696 /* Pods-MoodUp Task.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		78F464EC2E6E915F4FB0323F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				86B00FCF2C1110343DED5D07 /* Pods_MoodUp_Task.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D0533D3D1ECF6B11004FD73F = {
 			isa = PBXGroup;
 			children = (
 				D0533D481ECF6B12004FD73F /* MoodUp Task */,
 				D0533D5D1ECF6B12004FD73F /* MoodUp TaskTests */,
 				D0533D471ECF6B12004FD73F /* Products */,
+				21BF792A6D99925C74397201 /* Pods */,
+				78F464EC2E6E915F4FB0323F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,7 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				D0533D491ECF6B12004FD73F /* AppDelegate.swift */,
-				D0533D4B1ECF6B12004FD73F /* ViewController.swift */,
+				D0533D4B1ECF6B12004FD73F /* MainViewController.swift */,
 				D0533D4D1ECF6B12004FD73F /* Main.storyboard */,
 				D0533D501ECF6B12004FD73F /* Assets.xcassets */,
 				D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */,
@@ -103,9 +127,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0533D631ECF6B12004FD73F /* Build configuration list for PBXNativeTarget "MoodUp Task" */;
 			buildPhases = (
+				506223172A42FA7B2D9398F8 /* [CP] Check Pods Manifest.lock */,
 				D0533D421ECF6B11004FD73F /* Sources */,
 				D0533D431ECF6B11004FD73F /* Frameworks */,
 				D0533D441ECF6B11004FD73F /* Resources */,
+				7A8A5B7A5E956F62D965CB55 /* [CP] Embed Pods Frameworks */,
+				4D4810CFEBA672A2D03EA1D8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -194,12 +221,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4D4810CFEBA672A2D03EA1D8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MoodUp Task/Pods-MoodUp Task-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		506223172A42FA7B2D9398F8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7A8A5B7A5E956F62D965CB55 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MoodUp Task/Pods-MoodUp Task-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D0533D421ECF6B11004FD73F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0533D4C1ECF6B12004FD73F /* ViewController.swift in Sources */,
+				D0533D4C1ECF6B12004FD73F /* MainViewController.swift in Sources */,
 				D0533D4A1ECF6B12004FD73F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,6 +412,7 @@
 		};
 		D0533D641ECF6B12004FD73F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3FAF4D4C246291AAB379F73 /* Pods-MoodUp Task.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "MoodUp Task/Info.plist";
@@ -349,6 +425,7 @@
 		};
 		D0533D651ECF6B12004FD73F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3411C6A73CB0BE2BDDA22696 /* Pods-MoodUp Task.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "MoodUp Task/Info.plist";
@@ -406,6 +483,7 @@
 				D0533D651ECF6B12004FD73F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D0533D661ECF6B12004FD73F /* Build configuration list for PBXNativeTarget "MoodUp TaskTests" */ = {
 			isa = XCConfigurationList;
@@ -414,6 +492,7 @@
 				D0533D681ECF6B12004FD73F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
