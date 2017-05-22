@@ -1,0 +1,6 @@
+framework module Pods_MoodUp_Task {
+  umbrella header "Pods-MoodUp Task-umbrella.h"
+
+  export *
+  module * { export * }
+}
