@@ -72,25 +72,40 @@ class MainViewController: UIViewController {
         menuButton.frame.origin = CGPoint(x: view.frame.width - 40, y: view.frame.height - 40)
         menuButton.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
         view.addSubview(menuButton)
+        
+        // FBData Box
     }
     
     func setActionSheet() {
         alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let getRecipeAction = UIAlertAction(title: "Get the Recipe", style: .default) { (action) -> Void in
-            
+            self.getTheRecipe()
         }
         
-        let logInByFbAction = UIAlertAction(title: "Zaloguj przez Facebooka", style: .default) { (action) -> Void in
-            self.loginButtonClicked()
+        alertController.addAction(getRecipeAction)
+        
+        if AccessToken.current == nil {
+            let logInFbAction = UIAlertAction(title: "Zaloguj przez Facebooka", style: .default) { (action) -> Void in
+                self.loginButtonClicked()
+            }
+            
+            alertController.addAction(logInFbAction)
+        }
+        else {
+            let logOutFbAction = UIAlertAction(title: "Wyloguj", style: .default) { (action) -> Void in
+                print("Logged out!")
+                LoginManager().logOut()
+                self.setActionSheet()
+            }
+            
+            alertController.addAction(logOutFbAction)
         }
         
         let closeMenuAction = UIAlertAction(title: "Ukryj menu", style: .cancel) { (action) -> Void in
             print("cancel")
         }
         
-        alertController.addAction(getRecipeAction)
-        alertController.addAction(logInByFbAction)
         alertController.addAction(closeMenuAction)
     }
     
@@ -99,7 +114,12 @@ class MainViewController: UIViewController {
     }
     
     func getTheRecipe() {
-        
+        if AccessToken.current != nil {
+            print("Accept")
+        }
+        else {
+            self.loginButtonClicked()
+        }
     }
     
     func loginButtonClicked() {
@@ -112,6 +132,27 @@ class MainViewController: UIViewController {
                 print("User cancelled login.")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 print("Logged in!")
+                self.getFBData()
+                self.setActionSheet()
+            }
+        }
+    }
+    
+    func getFBData() {
+        let params = ["fields" : "name, picture"]
+        let graphRequest = GraphRequest(graphPath: "me", parameters: params)
+        graphRequest.start {
+            (urlResponse, requestResult) in
+            
+            switch requestResult {
+            case .failed(let error):
+                print("error in graph request:", error)
+            case .success(let graphResponse):
+                if let responseDictionary = graphResponse.dictionaryValue {
+                    print(responseDictionary["name"])
+                    
+                     print(((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)
+                }
             }
         }
     }
