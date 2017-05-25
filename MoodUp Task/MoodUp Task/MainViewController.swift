@@ -13,12 +13,16 @@ import FacebookLogin
 class MainViewController: UIViewController {
     
     // MARK: Properties
-    var alertController: UIAlertController!
+    var statusBarView = UIView()
+    var navigationBar = UINavigationBar()
+    var navigationLabel = UILabel()
+    var imageView = UIImageView()
+    var centerLabel = UILabel()
     var menuButton = UIButton(type: .contactAdd)
     var loginLabel = UILabel()
     var name = ""
     var profileImageURL = ""
-    
+    var alertController: UIAlertController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,58 +32,48 @@ class MainViewController: UIViewController {
         }
         
         setUI()
+        addSubviews()
         setActionSheet()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: Functions
 
     func setUI() {
         // Status Bar
-        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         let statusBarColor = UIColor(red: 211/255, green: 46/255, blue: 46/255, alpha: 1.0)
         statusBarView.backgroundColor = statusBarColor
-        view.addSubview(statusBarView)
         
         // Navigation Bar
         let topSpacing: CGFloat = 20
         let navigationHeight: CGFloat = 44
-        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: topSpacing, width: view.frame.width, height: navigationHeight))
-        view.addSubview(navigationBar)
+        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: topSpacing, width: view.frame.width, height: navigationHeight))
         
         // Navigation Label
-        let navigationLabel = UILabel(frame: CGRect(x: 20, y: topSpacing, width: view.frame.width, height: navigationHeight))
+        navigationLabel = UILabel(frame: CGRect(x: 20, y: topSpacing, width: view.frame.width, height: navigationHeight))
         navigationLabel.textColor = UIColor.white
         navigationLabel.text = "RecipeMaster"
         navigationLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
-        view.addSubview(navigationLabel)
         
         // Round image
         let imageRadius: CGFloat = 100
-        let imageView = UIImageView(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius, width: imageRadius * 2, height: imageRadius * 2))
+        imageView = UIImageView(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius, width: imageRadius * 2, height: imageRadius * 2))
         imageView.image = #imageLiteral(resourceName: "centerImage")
         imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = imageRadius
         imageView.clipsToBounds = true
         imageView.alpha = 0.5
-        view.addSubview(imageView)
         
         // Center Label
-        let centerLabel = UILabel(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius, width: imageRadius * 2, height: imageRadius * 2))
+        centerLabel = UILabel(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius, width: imageRadius * 2, height: imageRadius * 2))
         centerLabel.textAlignment = NSTextAlignment.center
         centerLabel.text = "RecipeMaster"
         centerLabel.font = UIFont.boldSystemFont(ofSize: 25.0)
-        view.addSubview(centerLabel)
         
         // MenuButton
         menuButton.frame.origin = CGPoint(x: view.frame.width - 40, y: view.frame.height - 40)
         menuButton.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
-        view.addSubview(menuButton)
         
         // FBData Box
         if AccessToken.current != nil {
@@ -93,6 +87,15 @@ class MainViewController: UIViewController {
             
             menuButton.frame.origin = CGPoint(x: view.frame.width - 40, y: view.frame.height - 90)
         }
+    }
+    
+    func addSubviews() {
+        view.addSubview(statusBarView)
+        view.addSubview(navigationBar)
+        view.addSubview(navigationLabel)
+        view.addSubview(imageView)
+        view.addSubview(centerLabel)
+        view.addSubview(menuButton)
     }
     
     func setActionSheet() {
