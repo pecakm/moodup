@@ -14,10 +14,18 @@ class MainViewController: UIViewController {
     
     // MARK: Properties
     var alertController: UIAlertController!
+    var menuButton = UIButton(type: .contactAdd)
+    var loginLabel = UILabel()
+    var name = ""
+    var profileImageURL = ""
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if AccessToken.current != nil {
+            getFBData()
+        }
         
         setUI()
         setActionSheet()
@@ -54,6 +62,7 @@ class MainViewController: UIViewController {
         let imageRadius: CGFloat = 100
         let imageView = UIImageView(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius, width: imageRadius * 2, height: imageRadius * 2))
         imageView.image = #imageLiteral(resourceName: "centerImage")
+        imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = imageRadius
         imageView.clipsToBounds = true
@@ -68,12 +77,22 @@ class MainViewController: UIViewController {
         view.addSubview(centerLabel)
         
         // MenuButton
-        let menuButton = UIButton(type: .contactAdd)
         menuButton.frame.origin = CGPoint(x: view.frame.width - 40, y: view.frame.height - 40)
         menuButton.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
         view.addSubview(menuButton)
         
         // FBData Box
+        if AccessToken.current != nil {
+            loginLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 50))
+            loginLabel.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1.0)
+            loginLabel.textAlignment = NSTextAlignment.center
+            loginLabel.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
+            loginLabel.text = "Logged as \(self.name)"
+            loginLabel.font = UIFont.systemFont(ofSize: 10.0)
+            view.addSubview(loginLabel)
+            
+            menuButton.frame.origin = CGPoint(x: view.frame.width - 40, y: view.frame.height - 90)
+        }
     }
     
     func setActionSheet() {
@@ -96,6 +115,8 @@ class MainViewController: UIViewController {
             let logOutFbAction = UIAlertAction(title: "Wyloguj", style: .default) { (action) -> Void in
                 print("Logged out!")
                 LoginManager().logOut()
+                self.loginLabel.removeFromSuperview()
+                self.setUI()
                 self.setActionSheet()
             }
             
@@ -133,6 +154,7 @@ class MainViewController: UIViewController {
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
                 print("Logged in!")
                 self.getFBData()
+                self.setUI()
                 self.setActionSheet()
             }
         }
@@ -149,12 +171,15 @@ class MainViewController: UIViewController {
                 print("error in graph request:", error)
             case .success(let graphResponse):
                 if let responseDictionary = graphResponse.dictionaryValue {
-                    print(responseDictionary["name"])
-                    
-                     print(((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)
+                    self.name = responseDictionary["name"] as! String!
+                    self.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
                 }
             }
         }
+    }
+    
+    func setFBDataBox() {
+        
     }
 }
 
