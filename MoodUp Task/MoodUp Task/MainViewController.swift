@@ -19,7 +19,6 @@ class MainViewController: UIViewController {
     var centerLabel = UILabel()
     var menuButton = UIButton(type: .contactAdd)
     var loginLabel = UILabel()
-    var name = ""
     var profileImageURL = ""
     var alertController: UIAlertController!
 
@@ -71,7 +70,6 @@ class MainViewController: UIViewController {
             loginLabel.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1.0)
             loginLabel.textAlignment = NSTextAlignment.center
             loginLabel.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-            loginLabel.text = "Logged as \(self.name)"
             loginLabel.font = UIFont.systemFont(ofSize: 10.0)
             view.addSubview(loginLabel)
             
@@ -96,6 +94,10 @@ class MainViewController: UIViewController {
             }
             else {
                 self.loginButtonClicked()
+                
+                if AccessToken.current != nil {
+                    self.navigationController?.pushViewController(RecipeViewController(), animated: true)
+                }
             }
         }
         
@@ -159,7 +161,8 @@ class MainViewController: UIViewController {
                 print("error in graph request:", error)
             case .success(let graphResponse):
                 if let responseDictionary = graphResponse.dictionaryValue {
-                    self.name = responseDictionary["name"] as! String!
+                    //self.name = responseDictionary["name"] as! String!
+                    self.loginLabel.text = "Logged as \(responseDictionary["name"] as! String)"
                     self.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
                 }
             }
