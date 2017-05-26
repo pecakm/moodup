@@ -13,8 +13,6 @@ import FacebookLogin
 class MainViewController: UIViewController {
     
     // MARK: Properties
-    var statusBarView = UIView()
-    var navigationBar = UINavigationBar()
     var navigationLabel = UILabel()
     var imageView = UIImageView()
     var centerLabel = UILabel()
@@ -39,21 +37,8 @@ class MainViewController: UIViewController {
     // MARK: Functions
 
     func setUI() {
-        // Status Bar
-        statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
-        let statusBarColor = UIColor(red: 211/255, green: 46/255, blue: 46/255, alpha: 1.0)
-        statusBarView.backgroundColor = statusBarColor
-        
         // Navigation Bar
-        let topSpacing: CGFloat = 20
-        let navigationHeight: CGFloat = 44
-        navigationBar = UINavigationBar(frame: CGRect(x: 0, y: topSpacing, width: view.frame.width, height: navigationHeight))
-        
-        // Navigation Label
-        navigationLabel = UILabel(frame: CGRect(x: 20, y: topSpacing, width: view.frame.width, height: navigationHeight))
-        navigationLabel.textColor = UIColor.white
-        navigationLabel.text = "RecipeMaster"
-        navigationLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+        navigationItem.title = "RecipeMaster"
         
         // Round image
         let imageRadius: CGFloat = 100
@@ -90,8 +75,6 @@ class MainViewController: UIViewController {
     }
     
     func addSubviews() {
-        view.addSubview(statusBarView)
-        view.addSubview(navigationBar)
         view.addSubview(navigationLabel)
         view.addSubview(imageView)
         view.addSubview(centerLabel)
@@ -102,7 +85,13 @@ class MainViewController: UIViewController {
         alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let getRecipeAction = UIAlertAction(title: "Get the Recipe", style: .default) { (action) -> Void in
-            self.getTheRecipe()
+            if AccessToken.current != nil {
+                //let newViewController = RecipeViewController()
+                self.navigationController?.pushViewController(RecipeViewController(), animated: true)
+            }
+            else {
+                self.loginButtonClicked()
+            }
         }
         
         alertController.addAction(getRecipeAction)
@@ -127,7 +116,7 @@ class MainViewController: UIViewController {
         }
         
         let closeMenuAction = UIAlertAction(title: "Ukryj menu", style: .cancel) { (action) -> Void in
-            print("cancel")
+            // Nothing happens
         }
         
         alertController.addAction(closeMenuAction)
@@ -135,15 +124,6 @@ class MainViewController: UIViewController {
     
     func showMenu(sender: UIButton) {
         self.present(alertController, animated: true, completion: nil)
-    }
-    
-    func getTheRecipe() {
-        if AccessToken.current != nil {
-            print("Accept")
-        }
-        else {
-            self.loginButtonClicked()
-        }
     }
     
     func loginButtonClicked() {
@@ -179,10 +159,6 @@ class MainViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    func setFBDataBox() {
-        
     }
 }
 

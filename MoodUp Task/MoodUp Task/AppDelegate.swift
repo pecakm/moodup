@@ -20,13 +20,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // General Settings
         UIApplication.shared.statusBarStyle = .lightContent
+        setStatusBarBackgroundColor(color: UIColor(red: 211/255, green: 46/255, blue: 46/255, alpha: 1.0))
         UINavigationBar.appearance().barTintColor = UIColor(red: 239/255, green: 68/255, blue: 56/255, alpha: 1.0)
         UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20.0), NSForegroundColorAttributeName: UIColor.white ]
+        UINavigationBar.appearance().tintColor = UIColor.white;
         
         // Facebook SDK
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         return true
+    }
+    
+    func setStatusBarBackgroundColor(color: UIColor) {
+        
+        guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
+        
+        statusBar.backgroundColor = color
     }
     
     public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool

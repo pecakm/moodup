@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4AB95EF5FCAF8E7F3B7165F3 /* Pods_MoodUp_Task.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86B00FCF2C1110343DED5D07 /* Pods_MoodUp_Task.framework */; };
+		D0166D401ED80A4800BDB5AE /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0166D3F1ED80A4800BDB5AE /* RecipeViewController.swift */; };
 		D0533D4A1ECF6B12004FD73F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D491ECF6B12004FD73F /* AppDelegate.swift */; };
 		D0533D4C1ECF6B12004FD73F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D4B1ECF6B12004FD73F /* MainViewController.swift */; };
 		D0533D4F1ECF6B12004FD73F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0533D4D1ECF6B12004FD73F /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		3411C6A73CB0BE2BDDA22696 /* Pods-MoodUp Task.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodUp Task.release.xcconfig"; path = "Pods/Target Support Files/Pods-MoodUp Task/Pods-MoodUp Task.release.xcconfig"; sourceTree = "<group>"; };
 		86B00FCF2C1110343DED5D07 /* Pods_MoodUp_Task.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoodUp_Task.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3FAF4D4C246291AAB379F73 /* Pods-MoodUp Task.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodUp Task.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MoodUp Task/Pods-MoodUp Task.debug.xcconfig"; sourceTree = "<group>"; };
+		D0166D3F1ED80A4800BDB5AE /* RecipeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		D0533D461ECF6B12004FD73F /* MoodUp Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoodUp Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0533D491ECF6B12004FD73F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0533D4B1ECF6B12004FD73F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			children = (
 				D0533D491ECF6B12004FD73F /* AppDelegate.swift */,
 				D0533D4B1ECF6B12004FD73F /* MainViewController.swift */,
+				D0166D3F1ED80A4800BDB5AE /* RecipeViewController.swift */,
 				D0533D4D1ECF6B12004FD73F /* Main.storyboard */,
 				D0533D501ECF6B12004FD73F /* Assets.xcassets */,
 				D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */,
@@ -276,6 +279,7 @@
 			files = (
 				D0533D4C1ECF6B12004FD73F /* MainViewController.swift in Sources */,
 				D0533D4A1ECF6B12004FD73F /* AppDelegate.swift in Sources */,
+				D0166D401ED80A4800BDB5AE /* RecipeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
