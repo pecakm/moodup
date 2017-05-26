@@ -13,6 +13,7 @@ import FacebookLogin
 class MainViewController: UIViewController {
     
     // MARK: Properties
+    var scrollView = UIScrollView()
     var navigationLabel = UILabel()
     var imageView = UIImageView()
     var centerLabel = UILabel()
@@ -29,6 +30,10 @@ class MainViewController: UIViewController {
             getFBData()
         }
         
+        // Set view with navigation controller
+        view.frame.origin.y += 64
+        view.frame.size.height -= 64.0
+        
         setUI()
         addSubviews()
         setActionSheet()
@@ -38,7 +43,7 @@ class MainViewController: UIViewController {
 
     func setUI() {
         // Navigation Bar
-        navigationItem.title = "RecipeMaster"
+        navigationController?.navigationBar.topItem!.title = "RecipeMaster"
         
         // Round image
         let imageRadius: CGFloat = 100
