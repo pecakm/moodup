@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 
 class RecipeViewController: UIViewController {
 
@@ -119,6 +120,7 @@ class RecipeViewController: UIViewController {
         let image1Height: CGFloat = 150
         image1 = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 16, height: image1Height))
         image1.contentMode = .scaleAspectFit
+        getImage(x: image1url)
         
         // Scroll View
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
@@ -144,6 +146,21 @@ class RecipeViewController: UIViewController {
         scrollView.addSubview(imagesLabel)
         scrollView.addSubview(loginLabel)
         scrollView.addSubview(image1)
+    }
+    
+    func getImage(x: String) {
+        Alamofire.request(x).responseImage { response in
+            debugPrint(response)
+            
+            print(response.request)
+            print(response.response)
+            debugPrint(response.result)
+            
+            if let image = response.result.value {
+                print("image downloaded: \(image)")
+                self.image1.image = image
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
