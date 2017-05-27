@@ -33,12 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setStatusBarBackgroundColor(color: UIColor) {
-        
         guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
         
         statusBar.backgroundColor = color
     }
     
+    // FB function
     public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool
     {
         return SDKApplicationDelegate.shared.application(app, open: url, options: options)

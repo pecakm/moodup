@@ -21,6 +21,8 @@ class RecipeViewController: UIViewController {
     var preparing = UITextView()
     var imagesLabel = UILabel()
     var loginLabel = UILabel()
+    var image1 = UIImageView()
+    var image1url = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,7 @@ class RecipeViewController: UIViewController {
                     self.preparing.text = self.preparing.text! + "\(i). \(step as! String)\n"
                     i += 1
                 }
+                self.image1url = ((JSON as! NSDictionary)["imgs"] as! NSArray)[0] as! String
             }
         }
     }
@@ -72,7 +75,7 @@ class RecipeViewController: UIViewController {
         //Pizza description
         let pizzaDescriptionY: CGFloat = pizzaLabelY + pizzaLabelHeight
         let pizzaDescriptionHeight: CGFloat = 130
-        pizzaDescription = UITextView(frame: CGRect(x: 32, y: pizzaDescriptionY, width: view.frame.width - 48, height: pizzaDescriptionHeight))
+        pizzaDescription = UITextView(frame: CGRect(x: 32, y: pizzaDescriptionY, width: view.frame.width - 64, height: pizzaDescriptionHeight))
         pizzaDescription.backgroundColor = .yellow
         pizzaDescription.isEditable = false
         pizzaDescription.isScrollEnabled = false
@@ -86,7 +89,7 @@ class RecipeViewController: UIViewController {
         // Ingredients
         let ingredientsY: CGFloat = ingredientsLabelY + ingredientsLabelHeight
         let ingredientsHeight: CGFloat = 150
-        ingredients = UITextView(frame: CGRect(x: 32, y: ingredientsY, width: view.frame.width - 48, height: ingredientsHeight))
+        ingredients = UITextView(frame: CGRect(x: 32, y: ingredientsY, width: view.frame.width - 64, height: ingredientsHeight))
         ingredients.isEditable = false
         ingredients.isScrollEnabled = false
         ingredients.backgroundColor = .yellow
@@ -100,7 +103,7 @@ class RecipeViewController: UIViewController {
         // Preparing
         let preparingY: CGFloat = preparingLabelY + preparingLabelHeight
         let preparingHeight: CGFloat = 200
-        preparing = UITextView(frame: CGRect(x: 32, y: preparingY, width: view.frame.width - 48, height: preparingHeight))
+        preparing = UITextView(frame: CGRect(x: 32, y: preparingY, width: view.frame.width - 64, height: preparingHeight))
         preparing.isEditable = false
         preparing.isScrollEnabled = false
         preparing.backgroundColor = .yellow
@@ -110,6 +113,12 @@ class RecipeViewController: UIViewController {
         let imagesLabelHeight: CGFloat = 30
         imagesLabel = UILabel(frame: CGRect(x: 16, y: imagesLabelY, width: view.frame.width - 32, height: imagesLabelHeight))
         imagesLabel.text = "Images:"
+        
+        // Image1
+        let image1Y: CGFloat = imagesLabelY + imagesLabelHeight
+        let image1Height: CGFloat = 150
+        image1 = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 16, height: image1Height))
+        image1.contentMode = .scaleAspectFit
         
         // Scroll View
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
@@ -121,7 +130,7 @@ class RecipeViewController: UIViewController {
         loginLabel.textAlignment = NSTextAlignment.center
         loginLabel.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
         loginLabel.font = UIFont.systemFont(ofSize: 10.0)
-        loginLabel.text = "Logged as..."
+        loginLabel.text = "Logged as \(MainViewController.GlobalVariable.name)"
     }
     
     func addSubviews() {
@@ -134,6 +143,7 @@ class RecipeViewController: UIViewController {
         scrollView.addSubview(preparing)
         scrollView.addSubview(imagesLabel)
         scrollView.addSubview(loginLabel)
+        scrollView.addSubview(image1)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

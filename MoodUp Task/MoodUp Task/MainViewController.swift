@@ -12,6 +12,11 @@ import FacebookLogin
 
 class MainViewController: UIViewController {
     
+    // Variables used in another class
+    struct GlobalVariable {
+        static var name = ""
+    }
+    
     // MARK: Properties
     var scrollView = UIScrollView()
     var navigationLabel = UILabel()
@@ -130,6 +135,10 @@ class MainViewController: UIViewController {
     }
     
     func showMenu(sender: UIButton) {
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+        }
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -161,8 +170,8 @@ class MainViewController: UIViewController {
                 print("error in graph request:", error)
             case .success(let graphResponse):
                 if let responseDictionary = graphResponse.dictionaryValue {
-                    //self.name = responseDictionary["name"] as! String!
                     self.loginLabel.text = "Logged as \(responseDictionary["name"] as! String)"
+                    GlobalVariable.name = responseDictionary["name"] as! String
                     self.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
                 }
             }
