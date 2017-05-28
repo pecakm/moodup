@@ -13,6 +13,7 @@ import AlamofireImage
 class RecipeViewController: UIViewController {
 
     // MARK: Properties
+    let queue = DispatchQueue(label: "sthdfrnt")
     var scrollView = UIScrollView()
     var pizzaLabel = UILabel()
     var pizzaDescription = UITextView()
@@ -23,7 +24,8 @@ class RecipeViewController: UIViewController {
     var imagesLabel = UILabel()
     var loginLabel = UILabel()
     var image1 = UIImageView()
-    var image1url = ""
+    var image2 = UIImageView()
+    var image3 = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +33,10 @@ class RecipeViewController: UIViewController {
         // Set view with navigation controller
         view.frame.origin.y += 64
         view.frame.size.height -= 64.0
-        
-        getJSONData()
+
+        queue.async {
+            self.getJSONData()
+        }
         setUI()
         addSubviews()
     }
@@ -56,7 +60,9 @@ class RecipeViewController: UIViewController {
                     self.preparing.text = self.preparing.text! + "\(i). \(step as! String)\n"
                     i += 1
                 }
-                self.image1url = ((JSON as! NSDictionary)["imgs"] as! NSArray)[0] as! String
+                self.getImage(x: ((JSON as! NSDictionary)["imgs"] as! NSArray)[0] as! String, y: self.image1)
+                self.getImage(x: ((JSON as! NSDictionary)["imgs"] as! NSArray)[1] as! String, y: self.image2)
+                self.getImage(x: ((JSON as! NSDictionary)["imgs"] as! NSArray)[2] as! String, y: self.image3)
             }
         }
     }
@@ -117,14 +123,23 @@ class RecipeViewController: UIViewController {
         
         // Image1
         let image1Y: CGFloat = imagesLabelY + imagesLabelHeight
-        let image1Height: CGFloat = 150
-        image1 = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 16, height: image1Height))
+        let image1Height: CGFloat = 100
+        image1 = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
         image1.contentMode = .scaleAspectFit
-        getImage(x: image1url)
+        
+        // Image2
+        image2 = UIImageView(frame: CGRect(x: view.frame.width/2 + 16, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
+        image2.contentMode = .scaleAspectFit
+        
+        // Image3
+        let image3Y: CGFloat = image1Y + image1Height
+        let image3Height: CGFloat = 100
+        image3 = UIImageView(frame: CGRect(x: 32, y: image3Y, width: view.frame.width/2 - 48, height: image3Height))
+        image3.contentMode = .scaleAspectFit
         
         // Scroll View
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        scrollView.contentSize.height = 1000
+        scrollView.contentSize.height = image3Y + image3Height + 70
         
         // FB Data Box
         loginLabel = UILabel(frame: CGRect(x: 0, y: scrollView.contentSize.height - 50, width: view.frame.width, height: 50))
@@ -146,9 +161,11 @@ class RecipeViewController: UIViewController {
         scrollView.addSubview(imagesLabel)
         scrollView.addSubview(loginLabel)
         scrollView.addSubview(image1)
+        scrollView.addSubview(image2)
+        scrollView.addSubview(image3)
     }
     
-    func getImage(x: String) {
+    func getImage(x: String, y: UIImageView) {
         Alamofire.request(x).responseImage { response in
             debugPrint(response)
             
@@ -158,8 +175,21 @@ class RecipeViewController: UIViewController {
             
             if let image = response.result.value {
                 print("image downloaded: \(image)")
-                self.image1.image = image
+                y.image = image
             }
+        }
+    }
+    
+    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
         }
     }
     

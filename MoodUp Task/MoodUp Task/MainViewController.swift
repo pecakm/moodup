@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
     // Variables used in another class
     struct GlobalVariable {
         static var name = ""
+        static var profileImageURL = ""
     }
     
     // MARK: Properties
@@ -24,7 +25,6 @@ class MainViewController: UIViewController {
     var centerLabel = UILabel()
     var menuButton = UIButton(type: .contactAdd)
     var loginLabel = UILabel()
-    var profileImageURL = ""
     var alertController: UIAlertController!
 
     override func viewDidLoad() {
@@ -172,7 +172,7 @@ class MainViewController: UIViewController {
                 if let responseDictionary = graphResponse.dictionaryValue {
                     self.loginLabel.text = "Logged as \(responseDictionary["name"] as! String)"
                     GlobalVariable.name = responseDictionary["name"] as! String
-                    self.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
+                    GlobalVariable.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
                 }
             }
         }
