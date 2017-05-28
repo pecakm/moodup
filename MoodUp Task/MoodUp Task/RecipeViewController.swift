@@ -13,6 +13,7 @@ import AlamofireImage
 class RecipeViewController: UIViewController {
 
     // MARK: Properties
+    var alertController = UIAlertController()
     let queue = DispatchQueue(label: "sthdfrnt")
     var scrollView = UIScrollView()
     var pizzaLabel = UILabel()
@@ -26,9 +27,13 @@ class RecipeViewController: UIViewController {
     var image1 = UIImageView()
     var image2 = UIImageView()
     var image3 = UIImageView()
+    var longPressGesture = UILongPressGestureRecognizer()
+    //var name = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(openActionSheet(sender:)))
+        longPressGesture.minimumPressDuration = 1.0
         
         // Set view with navigation controller
         view.frame.origin.y += 64
@@ -43,13 +48,13 @@ class RecipeViewController: UIViewController {
     
     func getJSONData() {
         Alamofire.request("http://mooduplabs.com/test/info.php").responseJSON { response in
-            print("URL: \(response.request)")  // original URL request
-            print("URL2: \(response.response)") // HTTP URL response
-            print("Server data: \(response.data)")     // server data
-            print("Response: \(response.result)")   // result of response serialization
+            //print("URL: \(response.request)")  // original URL request
+            //print("URL2: \(response.response)") // HTTP URL response
+            //print("Server data: \(response.data)")     // server data
+            //print("Response: \(response.result)")   // result of response serialization
             
             if let JSON = response.result.value {
-                print(JSON)
+                //print(JSON)
                 self.pizzaLabel.text = "\((JSON as! NSDictionary)["title"] as! String):"
                 self.pizzaDescription.text = (JSON as! NSDictionary)["description"] as! String
                 for ingredient in ((JSON as! NSDictionary)["ingredients"] as! NSArray) {
@@ -126,6 +131,8 @@ class RecipeViewController: UIViewController {
         let image1Height: CGFloat = 100
         image1 = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
         image1.contentMode = .scaleAspectFit
+        image1.isUserInteractionEnabled = true
+        image1.addGestureRecognizer(longPressGesture)
         
         // Image2
         image2 = UIImageView(frame: CGRect(x: view.frame.width/2 + 16, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
@@ -165,32 +172,61 @@ class RecipeViewController: UIViewController {
         scrollView.addSubview(image3)
     }
     
+    func setActionSheet() {
+        alertController = UIAlertController(title: "Czy zapisac?", message: nil, preferredStyle: .actionSheet)
+        
+        let saveImageAction = UIAlertAction(title: "Zachowaj", style: .default) { (action) -> Void in
+            self.saveImage()
+        }
+        
+        alertController.addAction(saveImageAction)
+        
+        let cancelAction = UIAlertAction(title: "Anuluj", style: .cancel) { (action) -> Void in
+            // nic sie nie dzieje
+        }
+        
+        alertController.addAction(cancelAction)
+    }
+    
+    /*func addAnnotation(press: UILongPressGestureRecognizer) {
+        if press.state == .began {
+            self.name = "imie"
+        }
+    }*/
+    
+    func openActionSheet(sender: UILongPressGestureRecognizer) {
+        setActionSheet()
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = image1
+            popoverController.sourceRect = image1.frame
+        }
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func getImage(x: String, y: UIImageView) {
         Alamofire.request(x).responseImage { response in
-            debugPrint(response)
+            //debugPrint(response)
             
-            print(response.request)
-            print(response.response)
-            debugPrint(response.result)
+            //print(response.request)
+            //print(response.response)
+            //debugPrint(response.result)
             
             if let image = response.result.value {
-                print("image downloaded: \(image)")
+                //print("image downloaded: \(image)")
                 y.image = image
             }
         }
     }
     
-    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            // we got back an error!
-            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        } else {
-            let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
-        }
+    func saveImage() {
+        let imageData = UIImagePNGRepresentation(image1.image!)
+        let compressedImage = UIImage(data: imageData!)
+        UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
+        
+        let alert = UIAlertController(title: "Saved", message: "Your image has been saved", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -200,16 +236,4 @@ class RecipeViewController: UIViewController {
             navigationController?.navigationBar.topItem!.title = "RecipeMaster"
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

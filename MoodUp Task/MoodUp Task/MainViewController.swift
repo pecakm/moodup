@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Properties
+    let queue = DispatchQueue(label: "que")
     var scrollView = UIScrollView()
     var navigationLabel = UILabel()
     var imageView = UIImageView()
@@ -51,7 +52,7 @@ class MainViewController: UIViewController {
         
         // Round image
         let imageRadius: CGFloat = 100
-        imageView = UIImageView(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius, width: imageRadius * 2, height: imageRadius * 2))
+        imageView = UIImageView(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius - 30, width: imageRadius * 2, height: imageRadius * 2))
         imageView.image = #imageLiteral(resourceName: "centerImage")
         imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFill
@@ -60,7 +61,7 @@ class MainViewController: UIViewController {
         imageView.alpha = 0.5
         
         // Center Label
-        centerLabel = UILabel(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius, width: imageRadius * 2, height: imageRadius * 2))
+        centerLabel = UILabel(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius - 30, width: imageRadius * 2, height: imageRadius * 2))
         centerLabel.textAlignment = NSTextAlignment.center
         centerLabel.text = "RecipeMaster"
         centerLabel.font = UIFont.boldSystemFont(ofSize: 25.0)
@@ -98,11 +99,10 @@ class MainViewController: UIViewController {
                 self.navigationController?.pushViewController(RecipeViewController(), animated: true)
             }
             else {
-                self.loginButtonClicked()
-                
-                if AccessToken.current != nil {
-                    self.navigationController?.pushViewController(RecipeViewController(), animated: true)
-                }
+                let alert = UIAlertController(title: "Ooops!", message: "Zaloguj się, aby obejrzeć przepis!", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
             }
         }
         
@@ -142,7 +142,8 @@ class MainViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func loginButtonClicked() {
+    func loginButtonClicked() -> Bool {
+        var flag = false
         let loginManager = LoginManager()
         loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
             switch loginResult {
@@ -155,8 +156,11 @@ class MainViewController: UIViewController {
                 self.getFBData()
                 self.setUI()
                 self.setActionSheet()
+                flag = true
             }
         }
+        
+        return flag
     }
     
     func getFBData() {
