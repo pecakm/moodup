@@ -1,11 +1,3 @@
-//
-//  RecipeViewController.swift
-//  MoodUp Task
-//
-//  Created by Mikołaj Pęcak on 26.05.2017.
-//  Copyright © 2017 Mikołaj Pęcak. All rights reserved.
-//
-
 import UIKit
 import Alamofire
 import AlamofireImage
@@ -14,26 +6,33 @@ class RecipeViewController: UIViewController {
 
     // MARK: Properties
     var alertController = UIAlertController()
-    let queue = DispatchQueue(label: "sthdfrnt")
+    let queue = DispatchQueue(label: "queue")
     var scrollView = UIScrollView()
-    var pizzaLabel = UILabel()
-    var pizzaDescription = UITextView()
+    var titleLabel = UILabel()
+    var titleDescription = UITextView()
     var ingredientsLabel = UILabel()
     var ingredients = UITextView()
     var preparingLabel = UILabel()
     var preparing = UITextView()
     var imagesLabel = UILabel()
     var loginLabel = UILabel()
+    var imageViews = [UIImageView]()
     var image1 = UIImageView()
     var image2 = UIImageView()
     var image3 = UIImageView()
-    var longPressGesture = UILongPressGestureRecognizer()
-    //var name = ""
+    var longPressGesture1 = UILongPressGestureRecognizer()
+    var longPressGesture2 = UILongPressGestureRecognizer()
+    var longPressGesture3 = UILongPressGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(openActionSheet(sender:)))
-        longPressGesture.minimumPressDuration = 1.0
+        
+        // Set press gestures
+        longPressGesture1 = UILongPressGestureRecognizer(target: self, action: #selector(openActionSheet(sender:)))
+        longPressGesture1.minimumPressDuration = 1.0
+        
+        // Set array of images
+        imageViews = [image1, image2, image3]
         
         // Set view with navigation controller
         view.frame.origin.y += 64
@@ -48,26 +47,20 @@ class RecipeViewController: UIViewController {
     
     func getJSONData() {
         Alamofire.request("http://mooduplabs.com/test/info.php").responseJSON { response in
-            //print("URL: \(response.request)")  // original URL request
-            //print("URL2: \(response.response)") // HTTP URL response
-            //print("Server data: \(response.data)")     // server data
-            //print("Response: \(response.result)")   // result of response serialization
-            
             if let JSON = response.result.value {
-                //print(JSON)
-                self.pizzaLabel.text = "\((JSON as! NSDictionary)["title"] as! String):"
-                self.pizzaDescription.text = (JSON as! NSDictionary)["description"] as! String
+                self.titleLabel.text = "\((JSON as! NSDictionary)["title"] as! String):"
+                self.titleDescription.text = (JSON as! NSDictionary)["description"] as! String
                 for ingredient in ((JSON as! NSDictionary)["ingredients"] as! NSArray) {
                     self.ingredients.text = self.ingredients.text! + "- \(ingredient as! String)\n"
                 }
                 var i: Int = 1
                 for step in ((JSON as! NSDictionary)["preparing"] as! NSArray) {
-                    self.preparing.text = self.preparing.text! + "\(i). \(step as! String)\n"
+                    self.preparing.text = self.preparing.text! + "\(i). \(step as! String)\n\n"
                     i += 1
                 }
-                self.getImage(x: ((JSON as! NSDictionary)["imgs"] as! NSArray)[0] as! String, y: self.image1)
-                self.getImage(x: ((JSON as! NSDictionary)["imgs"] as! NSArray)[1] as! String, y: self.image2)
-                self.getImage(x: ((JSON as! NSDictionary)["imgs"] as! NSArray)[2] as! String, y: self.image3)
+                for i in 0...2 {
+                    self.getImage(imageURL: (((JSON as! NSDictionary)["imgs"] as! NSArray)[i] as! String), imageView: self.imageViews[i])
+                }
             }
         }
     }
@@ -79,21 +72,21 @@ class RecipeViewController: UIViewController {
         // Navigation Bar
         navigationController?.navigationBar.topItem!.title = "Pizza Recipe!"
         
-        // Pizza Label
-        let pizzaLabelY: CGFloat = 20
-        let pizzaLabelHeight: CGFloat = 30
-        pizzaLabel = UILabel(frame: CGRect(x: 16, y: pizzaLabelY, width: view.frame.width - 32, height: pizzaLabelHeight))
+        // Title Label
+        let titleLabelY: CGFloat = 20
+        let titleLabelHeight: CGFloat = 30
+        titleLabel = UILabel(frame: CGRect(x: 16, y: titleLabelY, width: view.frame.width - 32, height: titleLabelHeight))
         
         //Pizza description
-        let pizzaDescriptionY: CGFloat = pizzaLabelY + pizzaLabelHeight
-        let pizzaDescriptionHeight: CGFloat = 130
-        pizzaDescription = UITextView(frame: CGRect(x: 32, y: pizzaDescriptionY, width: view.frame.width - 64, height: pizzaDescriptionHeight))
-        pizzaDescription.backgroundColor = .yellow
-        pizzaDescription.isEditable = false
-        pizzaDescription.isScrollEnabled = false
+        let titleDescriptionY: CGFloat = titleLabelY + titleLabelHeight
+        let titleDescriptionHeight: CGFloat = 130
+        titleDescription = UITextView(frame: CGRect(x: 32, y: titleDescriptionY, width: view.frame.width - 64, height: titleDescriptionHeight))
+        titleDescription.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
+        titleDescription.isEditable = false
+        titleDescription.isScrollEnabled = false
         
         // Ingredients Label
-        let ingredientsLabelY: CGFloat = pizzaDescriptionY + pizzaDescriptionHeight
+        let ingredientsLabelY: CGFloat = titleDescriptionY + titleDescriptionHeight
         let ingredientsLabelHeight: CGFloat = 30
         ingredientsLabel = UILabel(frame: CGRect(x: 16, y: ingredientsLabelY, width: view.frame.width - 32, height: ingredientsLabelHeight))
         ingredientsLabel.text = "Ingredients:"
@@ -102,9 +95,9 @@ class RecipeViewController: UIViewController {
         let ingredientsY: CGFloat = ingredientsLabelY + ingredientsLabelHeight
         let ingredientsHeight: CGFloat = 150
         ingredients = UITextView(frame: CGRect(x: 32, y: ingredientsY, width: view.frame.width - 64, height: ingredientsHeight))
+        ingredients.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
         ingredients.isEditable = false
         ingredients.isScrollEnabled = false
-        ingredients.backgroundColor = .yellow
         
         // Preparing Label
         let preparingLabelY: CGFloat = ingredientsY + ingredientsHeight
@@ -114,11 +107,11 @@ class RecipeViewController: UIViewController {
         
         // Preparing
         let preparingY: CGFloat = preparingLabelY + preparingLabelHeight
-        let preparingHeight: CGFloat = 200
+        let preparingHeight: CGFloat = 280
         preparing = UITextView(frame: CGRect(x: 32, y: preparingY, width: view.frame.width - 64, height: preparingHeight))
+        preparing.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
         preparing.isEditable = false
         preparing.isScrollEnabled = false
-        preparing.backgroundColor = .yellow
         
         // Images Label
         let imagesLabelY: CGFloat = preparingY + preparingHeight
@@ -129,27 +122,38 @@ class RecipeViewController: UIViewController {
         // Image1
         let image1Y: CGFloat = imagesLabelY + imagesLabelHeight
         let image1Height: CGFloat = 100
-        image1 = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
-        image1.contentMode = .scaleAspectFit
-        image1.isUserInteractionEnabled = true
-        image1.addGestureRecognizer(longPressGesture)
+        imageViews[0] = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
+        imageViews[0].contentMode = .scaleAspectFit
+        imageViews[0].isUserInteractionEnabled = true
+        imageViews[0].addGestureRecognizer(longPressGesture1)
         
         // Image2
-        image2 = UIImageView(frame: CGRect(x: view.frame.width/2 + 16, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
-        image2.contentMode = .scaleAspectFit
+        imageViews[1] = UIImageView(frame: CGRect(x: view.frame.width/2 + 16, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
+        imageViews[1].contentMode = .scaleAspectFit
+        imageViews[1].isUserInteractionEnabled = true
+        imageViews[1].addGestureRecognizer(longPressGesture2)
         
         // Image3
         let image3Y: CGFloat = image1Y + image1Height
         let image3Height: CGFloat = 100
-        image3 = UIImageView(frame: CGRect(x: 32, y: image3Y, width: view.frame.width/2 - 48, height: image3Height))
-        image3.contentMode = .scaleAspectFit
+        imageViews[2] = UIImageView(frame: CGRect(x: 32, y: image3Y, width: view.frame.width/2 - 48, height: image3Height))
+        imageViews[2].contentMode = .scaleAspectFit
+        imageViews[2].isUserInteractionEnabled = true
+        imageViews[2].addGestureRecognizer(longPressGesture3)
         
         // Scroll View
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize.height = image3Y + image3Height + 70
         
         // FB Data Box
-        loginLabel = UILabel(frame: CGRect(x: 0, y: scrollView.contentSize.height - 50, width: view.frame.width, height: 50))
+        let loginLabelY: CGFloat
+        if view.frame.height > scrollView.contentSize.height {
+            loginLabelY = view.frame.height - 50
+        }
+        else {
+            loginLabelY = scrollView.contentSize.height - 50
+        }
+        loginLabel = UILabel(frame: CGRect(x: 0, y: loginLabelY, width: view.frame.width, height: 50))
         loginLabel.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1.0)
         loginLabel.textAlignment = NSTextAlignment.center
         loginLabel.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
@@ -159,71 +163,65 @@ class RecipeViewController: UIViewController {
     
     func addSubviews() {
         view.addSubview(scrollView)
-        scrollView.addSubview(pizzaLabel)
-        scrollView.addSubview(pizzaDescription)
+        scrollView.addSubview(titleLabel)
+        scrollView.addSubview(titleDescription)
         scrollView.addSubview(ingredientsLabel)
         scrollView.addSubview(ingredients)
         scrollView.addSubview(preparingLabel)
         scrollView.addSubview(preparing)
         scrollView.addSubview(imagesLabel)
         scrollView.addSubview(loginLabel)
-        scrollView.addSubview(image1)
-        scrollView.addSubview(image2)
-        scrollView.addSubview(image3)
+        for view in imageViews {
+            scrollView.addSubview(view)
+        }
     }
     
-    func setActionSheet() {
-        alertController = UIAlertController(title: "Czy zapisac?", message: nil, preferredStyle: .actionSheet)
+    func setActionSheet(sender: UILongPressGestureRecognizer) {
+        alertController = UIAlertController(title: "Czy chcesz zapisać obrazek?", message: nil, preferredStyle: .actionSheet)
         
-        let saveImageAction = UIAlertAction(title: "Zachowaj", style: .default) { (action) -> Void in
-            self.saveImage()
+        let saveImageAction = UIAlertAction(title: "Zapisz", style: .default) { (action) -> Void in
+            if sender == self.longPressGesture1 {
+                self.saveImage(imageview: self.imageViews[0])
+            }
+            else if sender == self.longPressGesture2 {
+                self.saveImage(imageview: self.imageViews[1])
+            }
+            else if sender == self.longPressGesture3 {
+                self.saveImage(imageview: self.imageViews[2])
+            }
         }
         
         alertController.addAction(saveImageAction)
         
-        let cancelAction = UIAlertAction(title: "Anuluj", style: .cancel) { (action) -> Void in
-            // nic sie nie dzieje
-        }
+        let cancelAction = UIAlertAction(title: "Anuluj", style: .cancel, handler: nil)
         
         alertController.addAction(cancelAction)
     }
     
-    /*func addAnnotation(press: UILongPressGestureRecognizer) {
-        if press.state == .began {
-            self.name = "imie"
-        }
-    }*/
-    
     func openActionSheet(sender: UILongPressGestureRecognizer) {
-        setActionSheet()
-        if let popoverController = alertController.popoverPresentationController {
-            popoverController.sourceView = image1
-            popoverController.sourceRect = image1.frame
-        }
+        setActionSheet(sender: sender)
+        /*if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = imageview
+            popoverController.sourceRect = imageview.frame
+        }*/
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func getImage(x: String, y: UIImageView) {
-        Alamofire.request(x).responseImage { response in
-            //debugPrint(response)
-            
-            //print(response.request)
-            //print(response.response)
-            //debugPrint(response.result)
+    func getImage(imageURL: String, imageView: UIImageView) {
+        Alamofire.request(imageURL).responseImage { response in
             
             if let image = response.result.value {
-                //print("image downloaded: \(image)")
-                y.image = image
+                imageView.image = image
             }
         }
     }
     
-    func saveImage() {
-        let imageData = UIImagePNGRepresentation(image1.image!)
+    func saveImage(imageview: UIImageView) {
+        let imageData = UIImagePNGRepresentation(imageview.image!)
         let compressedImage = UIImage(data: imageData!)
         UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
         
-        let alert = UIAlertController(title: "Saved", message: "Your image has been saved", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Done!", message: "Your image has been saved", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)

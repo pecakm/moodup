@@ -1,36 +1,27 @@
-//
-//  MainViewController.swift
-//  MoodUp Task
-//
-//  Created by Mikołaj Pęcak on 19.05.2017.
-//  Copyright © 2017 Mikołaj Pęcak. All rights reserved.
-//
-
 import UIKit
 import FacebookCore
 import FacebookLogin
 
 class MainViewController: UIViewController {
     
-    // Variables used in another class
+    // MARK: Properties
+    
+    // Global variables
     struct GlobalVariable {
         static var name = ""
         static var profileImageURL = ""
     }
     
-    // MARK: Properties
-    let queue = DispatchQueue(label: "que")
-    var scrollView = UIScrollView()
-    var navigationLabel = UILabel()
     var imageView = UIImageView()
     var centerLabel = UILabel()
     var menuButton = UIButton(type: .contactAdd)
     var loginLabel = UILabel()
     var alertController: UIAlertController!
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         if AccessToken.current != nil {
             getFBData()
         }
@@ -44,7 +35,27 @@ class MainViewController: UIViewController {
         setActionSheet()
     }
     
+    
     // MARK: Functions
+    
+    func getFBData() {
+        let params = ["fields": "name, picture"]
+        let graphRequest = GraphRequest(graphPath: "me", parameters: params)
+        graphRequest.start {
+            (urlResponse, requestResult) in
+            
+            switch requestResult {
+            case .failed(let error):
+                print("error in graph request:", error)
+            case .success(let graphResponse):
+                if let responseDictionary = graphResponse.dictionaryValue {
+                    self.loginLabel.text = "Logged as \(responseDictionary["name"] as! String)"
+                    GlobalVariable.name = responseDictionary["name"] as! String
+                    GlobalVariable.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
+                }
+            }
+        }
+    }
 
     func setUI() {
         // Navigation Bar
@@ -84,7 +95,6 @@ class MainViewController: UIViewController {
     }
     
     func addSubviews() {
-        view.addSubview(navigationLabel)
         view.addSubview(imageView)
         view.addSubview(centerLabel)
         view.addSubview(menuButton)
@@ -95,11 +105,10 @@ class MainViewController: UIViewController {
         
         let getRecipeAction = UIAlertAction(title: "Get the Recipe", style: .default) { (action) -> Void in
             if AccessToken.current != nil {
-                //let newViewController = RecipeViewController()
                 self.navigationController?.pushViewController(RecipeViewController(), animated: true)
             }
             else {
-                let alert = UIAlertController(title: "Ooops!", message: "Zaloguj się, aby obejrzeć przepis!", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Ooops!", message: "Log in please, if you want get recipe!", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(okAction)
                 self.present(alert, animated: true, completion: nil)
@@ -117,7 +126,6 @@ class MainViewController: UIViewController {
         }
         else {
             let logOutFbAction = UIAlertAction(title: "Wyloguj", style: .default) { (action) -> Void in
-                print("Logged out!")
                 LoginManager().logOut()
                 self.loginLabel.removeFromSuperview()
                 self.setUI()
@@ -127,9 +135,7 @@ class MainViewController: UIViewController {
             alertController.addAction(logOutFbAction)
         }
         
-        let closeMenuAction = UIAlertAction(title: "Ukryj menu", style: .cancel) { (action) -> Void in
-            // Nothing happens
-        }
+        let closeMenuAction = UIAlertAction(title: "Ukryj menu", style: .cancel, handler: nil)
         
         alertController.addAction(closeMenuAction)
     }
@@ -142,8 +148,7 @@ class MainViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func loginButtonClicked() -> Bool {
-        var flag = false
+    func loginButtonClicked() {
         let loginManager = LoginManager()
         loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
             switch loginResult {
@@ -151,33 +156,10 @@ class MainViewController: UIViewController {
                 print(error)
             case .cancelled:
                 print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in!")
+            case .success:
                 self.getFBData()
                 self.setUI()
                 self.setActionSheet()
-                flag = true
-            }
-        }
-        
-        return flag
-    }
-    
-    func getFBData() {
-        let params = ["fields" : "name, picture"]
-        let graphRequest = GraphRequest(graphPath: "me", parameters: params)
-        graphRequest.start {
-            (urlResponse, requestResult) in
-            
-            switch requestResult {
-            case .failed(let error):
-                print("error in graph request:", error)
-            case .success(let graphResponse):
-                if let responseDictionary = graphResponse.dictionaryValue {
-                    self.loginLabel.text = "Logged as \(responseDictionary["name"] as! String)"
-                    GlobalVariable.name = responseDictionary["name"] as! String
-                    GlobalVariable.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
-                }
             }
         }
     }
