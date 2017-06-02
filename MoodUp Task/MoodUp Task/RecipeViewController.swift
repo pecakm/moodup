@@ -2,19 +2,18 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-class RecipeViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class RecipeViewController: UIViewController {
 
     // MARK: Properties
     var alertController = UIAlertController()
     let queue = DispatchQueue(label: "queue")
     var scrollView = UIScrollView()
-    var titleLabel = UILabel()
-    var titleDescription = UITextView()
-    var ingredientsLabel = UILabel()
-    var ingredients = UITextView()
-    var preparingLabel = UILabel()
-    var preparing = UITextView()
-    var imagesLabel = UILabel()
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleDescription: UITextView!
+    @IBOutlet weak var ingredients: UITextView!
+    @IBOutlet weak var preparing: UITextView!
+    
+
     var imageViews = [UIImageView]()
     var image1 = UIImageView()
     var image2 = UIImageView()
@@ -23,7 +22,8 @@ class RecipeViewController: UIViewController, UICollectionViewDelegateFlowLayout
     var longPressGesture1 = UILongPressGestureRecognizer()
     var longPressGesture2 = UILongPressGestureRecognizer()
     var longPressGesture3 = UILongPressGestureRecognizer()
-    var loginLabel = UILabel()
+    @IBOutlet weak var loginLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,16 +37,11 @@ class RecipeViewController: UIViewController, UICollectionViewDelegateFlowLayout
         
         // Set array of images
         imageViews = [image1, image2, image3]
-        
-        // Set view with navigation controller
-        view.frame.origin.y += 64
-        view.frame.size.height -= 64.0
 
         queue.async {
             self.getJSONData()
         }
         setUI()
-        addSubviews()
     }
     
     func getJSONData() {
@@ -72,59 +67,10 @@ class RecipeViewController: UIViewController, UICollectionViewDelegateFlowLayout
     }
     
     func setUI() {
-        // Background color
-        view.backgroundColor = .white
-        
         // Navigation Bar
         navigationController?.navigationBar.topItem!.title = "Pizza Recipe!"
         
-        // Title Label
-        let titleLabelY: CGFloat = 20
-        let titleLabelHeight: CGFloat = 30
-        titleLabel = UILabel(frame: CGRect(x: 16, y: titleLabelY, width: view.frame.width - 32, height: titleLabelHeight))
-        
-        //Pizza description
-        let titleDescriptionY: CGFloat = titleLabelY + titleLabelHeight
-        let titleDescriptionHeight: CGFloat = 130
-        titleDescription = UITextView(frame: CGRect(x: 32, y: titleDescriptionY, width: view.frame.width - 64, height: titleDescriptionHeight))
-        titleDescription.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-        titleDescription.isEditable = false
-        titleDescription.isScrollEnabled = false
-        
-        // Ingredients Label
-        let ingredientsLabelY: CGFloat = titleDescriptionY + titleDescriptionHeight
-        let ingredientsLabelHeight: CGFloat = 30
-        ingredientsLabel = UILabel(frame: CGRect(x: 16, y: ingredientsLabelY, width: view.frame.width - 32, height: ingredientsLabelHeight))
-        ingredientsLabel.text = "Ingredients:"
-        
-        // Ingredients
-        let ingredientsY: CGFloat = ingredientsLabelY + ingredientsLabelHeight
-        let ingredientsHeight: CGFloat = 150
-        ingredients = UITextView(frame: CGRect(x: 32, y: ingredientsY, width: view.frame.width - 64, height: ingredientsHeight))
-        ingredients.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-        ingredients.isEditable = false
-        ingredients.isScrollEnabled = false
-        
-        // Preparing Label
-        let preparingLabelY: CGFloat = ingredientsY + ingredientsHeight
-        let preparingLabelHeight: CGFloat = 30
-        preparingLabel = UILabel(frame: CGRect(x: 16, y: preparingLabelY, width: view.frame.width - 32, height: preparingLabelHeight))
-        preparingLabel.text = "Preparing:"
-        
-        // Preparing
-        let preparingY: CGFloat = preparingLabelY + preparingLabelHeight
-        let preparingHeight: CGFloat = 280
-        preparing = UITextView(frame: CGRect(x: 32, y: preparingY, width: view.frame.width - 64, height: preparingHeight))
-        preparing.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-        preparing.isEditable = false
-        preparing.isScrollEnabled = false
-        
-        // Images Label
-        let imagesLabelY: CGFloat = preparingY + preparingHeight
-        let imagesLabelHeight: CGFloat = 30
-        imagesLabel = UILabel(frame: CGRect(x: 16, y: imagesLabelY, width: view.frame.width - 32, height: imagesLabelHeight))
-        imagesLabel.text = "Images:"
-        
+        /*
         // Image1
         let image1Y: CGFloat = imagesLabelY + imagesLabelHeight
         let image1Height: CGFloat = (view.frame.width/2 - 48) * 0.8
@@ -150,48 +96,11 @@ class RecipeViewController: UIViewController, UICollectionViewDelegateFlowLayout
         // Scroll View
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize.height = image3Y + image3Height + 70
-        
+       */
         // FB Data Box
-        let loginLabelY: CGFloat
-        if view.frame.height > scrollView.contentSize.height {
-            loginLabelY = view.frame.height - 50
-        }
-        else {
-            loginLabelY = scrollView.contentSize.height - 50
-        }
-        loginLabel = UILabel(frame: CGRect(x: 0, y: loginLabelY, width: view.frame.width, height: 50))
-        loginLabel.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1.0)
-        loginLabel.textAlignment = NSTextAlignment.center
-        loginLabel.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-        loginLabel.font = UIFont.systemFont(ofSize: 10.0)
         loginLabel.text = "Logged as \(MainViewController.GlobalVariable.name)"
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 14
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath as IndexPath)
-        cell.backgroundColor = UIColor.orange
-        return cell
-    }
-    
-    func addSubviews() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(titleLabel)
-        scrollView.addSubview(titleDescription)
-        scrollView.addSubview(ingredientsLabel)
-        scrollView.addSubview(ingredients)
-        scrollView.addSubview(preparingLabel)
-        scrollView.addSubview(preparing)
-        scrollView.addSubview(imagesLabel)
-        scrollView.addSubview(loginLabel)
-        for view in imageViews {
-            scrollView.addSubview(view)
-        }
-    }
-    
+
     func setActionSheet(sender: UILongPressGestureRecognizer) {
         alertController = UIAlertController(title: "Czy chcesz zapisać obrazek?", message: nil, preferredStyle: .actionSheet)
         

@@ -76,7 +76,9 @@ class MainViewController: UIViewController {
         alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let getRecipeAction = UIAlertAction(title: "Get the Recipe", style: .default) { (action) -> Void in
-            self.navigationController?.pushViewController(RecipeViewController(), animated: true)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "RecipeVC")
+            self.navigationController?.pushViewController(controller, animated: true)
         }
         alertController.addAction(getRecipeAction)
         
