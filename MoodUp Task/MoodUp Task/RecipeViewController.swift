@@ -2,7 +2,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-class RecipeViewController: UIViewController {
+class RecipeViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     // MARK: Properties
     var alertController = UIAlertController()
@@ -15,7 +15,6 @@ class RecipeViewController: UIViewController {
     var preparingLabel = UILabel()
     var preparing = UITextView()
     var imagesLabel = UILabel()
-    var loginLabel = UILabel()
     var imageViews = [UIImageView]()
     var image1 = UIImageView()
     var image2 = UIImageView()
@@ -24,6 +23,7 @@ class RecipeViewController: UIViewController {
     var longPressGesture1 = UILongPressGestureRecognizer()
     var longPressGesture2 = UILongPressGestureRecognizer()
     var longPressGesture3 = UILongPressGestureRecognizer()
+    var loginLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,7 +146,7 @@ class RecipeViewController: UIViewController {
         imageViews[2].contentMode = .scaleAspectFit
         imageViews[2].isUserInteractionEnabled = true
         imageViews[2].addGestureRecognizer(pressGestures[2])
-        
+
         // Scroll View
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize.height = image3Y + image3Height + 70
@@ -165,6 +165,16 @@ class RecipeViewController: UIViewController {
         loginLabel.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
         loginLabel.font = UIFont.systemFont(ofSize: 10.0)
         loginLabel.text = "Logged as \(MainViewController.GlobalVariable.name)"
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 14
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath as IndexPath)
+        cell.backgroundColor = UIColor.orange
+        return cell
     }
     
     func addSubviews() {

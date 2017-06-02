@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="i42-SX-cLc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="i42-SX-cLc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,22 +26,101 @@
             </objects>
             <point key="canvasLocation" x="-460.625" y="42.243333333333332"/>
         </scene>
-        <!--Main View Controller-->
+        <!--RecipeMaster-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="MoodUp_Task" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rz6-bL-d3m"/>
+                        <viewControllerLayoutGuide type="bottom" id="bYu-JI-4GA"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="centerImage" translatesAutoresizingMaskIntoConstraints="NO" id="hQm-43-Gw9">
+                                <rect key="frame" x="88" y="234" width="200" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="QIZ-0n-M0y"/>
+                                    <constraint firstAttribute="width" constant="200" id="rgR-9Z-N7O"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RecipeMaster" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Uq-6X-bxY">
+                                <rect key="frame" x="105" y="319" width="165" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dvV-oQ-s5K" userLabel="Login Box">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MxF-ZW-eiR">
+                                        <rect key="frame" x="8" y="5" width="359" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azG-Oi-7iH" userLabel="Login Label">
+                                                <rect key="frame" x="0.0" y="14" width="26.5" height="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RIP-wK-eDn" userLabel="Profile Image">
+                                                <rect key="frame" x="319" y="0.0" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="NUc-8X-KgK"/>
+                                                    <constraint firstAttribute="width" constant="40" id="RAs-6b-6rg"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="16U-73-JnH"/>
+                                    <constraint firstAttribute="trailing" secondItem="MxF-ZW-eiR" secondAttribute="trailing" constant="8" id="1pq-9q-tLc"/>
+                                    <constraint firstAttribute="bottom" secondItem="MxF-ZW-eiR" secondAttribute="bottom" constant="5" id="Bw2-DT-6g4"/>
+                                    <constraint firstItem="MxF-ZW-eiR" firstAttribute="top" secondItem="dvV-oQ-s5K" secondAttribute="top" constant="5" id="CcT-oM-hRs"/>
+                                    <constraint firstItem="MxF-ZW-eiR" firstAttribute="leading" secondItem="dvV-oQ-s5K" secondAttribute="leading" constant="8" id="gGP-zF-jx6"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1C-Ql-vHV" userLabel="Menu Button">
+                                <rect key="frame" x="337" y="579" width="22" height="22"/>
+                                <connections>
+                                    <action selector="showMenu:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f62-ub-KwT"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hQm-43-Gw9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2Cr-w3-X0I"/>
+                            <constraint firstItem="bYu-JI-4GA" firstAttribute="top" secondItem="dvV-oQ-s5K" secondAttribute="bottom" id="Er4-8l-5qc"/>
+                            <constraint firstItem="3Uq-6X-bxY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="IWG-nc-5Tz"/>
+                            <constraint firstItem="3Uq-6X-bxY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Jjt-My-WVp"/>
+                            <constraint firstAttribute="trailing" secondItem="dvV-oQ-s5K" secondAttribute="trailing" id="MnQ-gn-LzR"/>
+                            <constraint firstItem="hQm-43-Gw9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Oqm-sL-X78"/>
+                            <constraint firstItem="dvV-oQ-s5K" firstAttribute="top" secondItem="F1C-Ql-vHV" secondAttribute="bottom" constant="16" id="P8s-HA-HRb"/>
+                            <constraint firstItem="dvV-oQ-s5K" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SFb-xH-bjc"/>
+                            <constraint firstItem="F1C-Ql-vHV" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="lcK-Zr-2GT"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Y8S-sW-iCc"/>
+                    <navigationItem key="navigationItem" title="RecipeMaster" id="Y8S-sW-iCc"/>
+                    <connections>
+                        <outlet property="centerImage" destination="hQm-43-Gw9" id="Ga6-mi-eNo"/>
+                        <outlet property="loginBox" destination="dvV-oQ-s5K" id="5p2-G1-m1P"/>
+                        <outlet property="loginLabel" destination="azG-Oi-7iH" id="Wai-EI-rFX"/>
+                        <outlet property="menuButton" destination="F1C-Ql-vHV" id="umF-eO-kyo"/>
+                        <outlet property="menuButtonConstraint" destination="P8s-HA-HRb" id="38J-iU-pnl"/>
+                        <outlet property="profileImage" destination="RIP-wK-eDn" id="a3j-pC-Pbe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="86.25" y="154.52166666666665"/>
+            <point key="canvasLocation" x="85.5" y="154.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="centerImage" width="200" height="150"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

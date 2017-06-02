@@ -1,6 +1,8 @@
 import UIKit
 import FacebookCore
 import FacebookLogin
+import Alamofire
+import AlamofireImage
 
 class MainViewController: UIViewController {
     
@@ -12,10 +14,13 @@ class MainViewController: UIViewController {
         static var profileImageURL = ""
     }
     
-    var imageView = UIImageView()
-    var centerLabel = UILabel()
-    var menuButton = UIButton(type: .contactAdd)
-    var loginLabel = UILabel()
+    
+    @IBOutlet weak var centerImage: UIImageView!
+    @IBOutlet weak var loginBox: UIView!
+    @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var menuButtonConstraint: NSLayoutConstraint!
     var alertController: UIAlertController!
 
     
@@ -26,12 +31,7 @@ class MainViewController: UIViewController {
             getFBData()
         }
         
-        // Set view with navigation controller
-        view.frame.origin.y += 64
-        view.frame.size.height -= 64.0
-        
         setUI()
-        addSubviews()
         setActionSheet()
     }
     
@@ -52,95 +52,55 @@ class MainViewController: UIViewController {
                     self.loginLabel.text = "Logged as \(responseDictionary["name"] as! String)"
                     GlobalVariable.name = responseDictionary["name"] as! String
                     GlobalVariable.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
+                    self.getImage(imageURL: GlobalVariable.profileImageURL, imageView: self.profileImage)
                 }
             }
         }
     }
 
     func setUI() {
-        // Navigation Bar
-        navigationController?.navigationBar.topItem!.title = "RecipeMaster"
-        
         // Round image
-        let imageRadius: CGFloat = 100
-        imageView = UIImageView(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius - 30, width: imageRadius * 2, height: imageRadius * 2))
-        imageView.image = #imageLiteral(resourceName: "centerImage")
-        imageView.backgroundColor = .white
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = imageRadius
-        imageView.clipsToBounds = true
-        imageView.alpha = 0.5
-        
-        // Center Label
-        centerLabel = UILabel(frame: CGRect(x: view.frame.width/2 - imageRadius, y: view.frame.height/2 - imageRadius - 30, width: imageRadius * 2, height: imageRadius * 2))
-        centerLabel.textAlignment = NSTextAlignment.center
-        centerLabel.text = "RecipeMaster"
-        centerLabel.font = UIFont.boldSystemFont(ofSize: 25.0)
-        
-        // MenuButton
-        menuButton.frame.origin = CGPoint(x: view.frame.width - 40, y: view.frame.height - 40)
-        menuButton.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
+        let imageRadius: CGFloat = #imageLiteral(resourceName: "centerImage").size.width/2
+        centerImage.layer.cornerRadius = imageRadius
         
         // FBData Box
         if AccessToken.current != nil {
-            loginLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 50))
-            loginLabel.backgroundColor = UIColor(red: 225/255, green: 225/255, blue: 225/255, alpha: 1.0)
-            loginLabel.textAlignment = NSTextAlignment.center
-            loginLabel.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0)
-            loginLabel.font = UIFont.systemFont(ofSize: 10.0)
-            view.addSubview(loginLabel)
-            
-            menuButton.frame.origin = CGPoint(x: view.frame.width - 40, y: view.frame.height - 90)
+            loginBox.isHidden = false
         }
-    }
-    
-    func addSubviews() {
-        view.addSubview(imageView)
-        view.addSubview(centerLabel)
-        view.addSubview(menuButton)
+        else {
+            menuButtonConstraint.constant = menuButtonConstraint.constant - loginBox.bounds.height
+        }
     }
     
     func setActionSheet() {
         alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let getRecipeAction = UIAlertAction(title: "Get the Recipe", style: .default) { (action) -> Void in
-            if AccessToken.current != nil {
-                self.navigationController?.pushViewController(RecipeViewController(), animated: true)
-            }
-            else {
-                let alert = UIAlertController(title: "Ooops!", message: "Log in please, if you want get recipe!", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                alert.addAction(okAction)
-                self.present(alert, animated: true, completion: nil)
-            }
+            self.navigationController?.pushViewController(RecipeViewController(), animated: true)
         }
-        
         alertController.addAction(getRecipeAction)
         
         if AccessToken.current == nil {
             let logInFbAction = UIAlertAction(title: "Zaloguj przez Facebooka", style: .default) { (action) -> Void in
                 self.loginButtonClicked()
             }
-            
             alertController.addAction(logInFbAction)
         }
         else {
             let logOutFbAction = UIAlertAction(title: "Wyloguj", style: .default) { (action) -> Void in
                 LoginManager().logOut()
-                self.loginLabel.removeFromSuperview()
-                self.setUI()
+                self.loginBox.isHidden = true
+                self.menuButtonConstraint.constant = self.menuButtonConstraint.constant - self.loginBox.bounds.height
                 self.setActionSheet()
             }
-            
             alertController.addAction(logOutFbAction)
         }
         
         let closeMenuAction = UIAlertAction(title: "Ukryj menu", style: .cancel, handler: nil)
-        
         alertController.addAction(closeMenuAction)
     }
     
-    func showMenu(sender: UIButton) {
+    @IBAction func showMenu(_ sender: UIButton) {
         if let popoverController = alertController.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
@@ -158,10 +118,19 @@ class MainViewController: UIViewController {
                 print("User cancelled login.")
             case .success:
                 self.getFBData()
-                self.setUI()
+                self.loginBox.isHidden = false
+                self.menuButtonConstraint.constant = self.menuButtonConstraint.constant + self.loginBox.bounds.height
                 self.setActionSheet()
             }
         }
     }
+    
+    func getImage(imageURL: String, imageView: UIImageView) {
+        Alamofire.request(imageURL).responseImage { response in
+            
+            if let image = response.result.value {
+                imageView.image = image
+            }
+        }
+    }
 }
-
