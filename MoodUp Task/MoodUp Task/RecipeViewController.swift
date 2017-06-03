@@ -2,42 +2,40 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-class RecipeViewController: UIViewController {
+class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: Properties
     var alertController = UIAlertController()
     let queue = DispatchQueue(label: "queue")
-    var scrollView = UIScrollView()
+    
+    @IBOutlet weak var appView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleDescription: UITextView!
     @IBOutlet weak var ingredients: UITextView!
     @IBOutlet weak var preparing: UITextView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
 
-    var imageViews = [UIImageView]()
-    var image1 = UIImageView()
-    var image2 = UIImageView()
-    var image3 = UIImageView()
+    var urls = [String]()
+/*
     var pressGestures = [UILongPressGestureRecognizer]()
     var longPressGesture1 = UILongPressGestureRecognizer()
     var longPressGesture2 = UILongPressGestureRecognizer()
-    var longPressGesture3 = UILongPressGestureRecognizer()
+    var longPressGesture3 = UILongPressGestureRecognizer()*/
     @IBOutlet weak var loginLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set press gestures
+ /*       // Set press gestures
         pressGestures = [longPressGesture1, longPressGesture2, longPressGesture3]
         for gesture in 0...2 {
             pressGestures[gesture] = UILongPressGestureRecognizer(target: self, action: #selector(openActionSheet(sender:)))
             pressGestures[gesture].minimumPressDuration = 1.0
         }
         
-        // Set array of images
-        imageViews = [image1, image2, image3]
-
+*/
         queue.async {
             self.getJSONData()
         }
@@ -59,48 +57,40 @@ class RecipeViewController: UIViewController {
                 }
                 i = 0
                 for image in ((JSON as! NSDictionary)["imgs"] as! NSArray) {
-                    self.getImage(imageURL: image as! String, imageView: self.imageViews[i])
-                    i += 1
+                    self.urls.append(image as! String)
                 }
+                
+                self.collectionView.delegate = self
+                self.collectionView.dataSource = self
             }
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return urls.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ImageCollectionViewCell
+        
+        getImage(imageURL: urls[indexPath.row], imageView: cell.imageView)
+        
+        return cell
     }
     
     func setUI() {
         // Navigation Bar
         navigationController?.navigationBar.topItem!.title = "Pizza Recipe!"
-        
-        /*
-        // Image1
-        let image1Y: CGFloat = imagesLabelY + imagesLabelHeight
-        let image1Height: CGFloat = (view.frame.width/2 - 48) * 0.8
-        imageViews[0] = UIImageView(frame: CGRect(x: 32, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
-        imageViews[0].contentMode = .scaleAspectFit
-        imageViews[0].isUserInteractionEnabled = true
-        imageViews[0].addGestureRecognizer(pressGestures[0])
-        
-        // Image2
-        imageViews[1] = UIImageView(frame: CGRect(x: view.frame.width/2 + 16, y: image1Y, width: view.frame.width/2 - 48, height: image1Height))
-        imageViews[1].contentMode = .scaleAspectFit
-        imageViews[1].isUserInteractionEnabled = true
-        imageViews[1].addGestureRecognizer(pressGestures[1])
-        
-        // Image3
-        let image3Y: CGFloat = image1Y + image1Height
-        let image3Height: CGFloat = (view.frame.width/2 - 48) * 0.8
-        imageViews[2] = UIImageView(frame: CGRect(x: 32, y: image3Y, width: view.frame.width/2 - 48, height: image3Height))
-        imageViews[2].contentMode = .scaleAspectFit
-        imageViews[2].isUserInteractionEnabled = true
-        imageViews[2].addGestureRecognizer(pressGestures[2])
-
+/*
         // Scroll View
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize.height = image3Y + image3Height + 70
        */
+        
         // FB Data Box
         loginLabel.text = "Logged as \(MainViewController.GlobalVariable.name)"
     }
-
+/*
     func setActionSheet(sender: UILongPressGestureRecognizer) {
         alertController = UIAlertController(title: "Czy chcesz zapisać obrazek?", message: nil, preferredStyle: .actionSheet)
         
@@ -143,7 +133,7 @@ class RecipeViewController: UIViewController {
 
         self.present(alertController, animated: true, completion: nil)
     }
-    
+*/    
     func getImage(imageURL: String, imageView: UIImageView) {
         Alamofire.request(imageURL).responseImage { response in
             

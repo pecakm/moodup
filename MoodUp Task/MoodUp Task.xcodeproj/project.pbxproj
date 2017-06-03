@@ -15,6 +15,7 @@
 		D0533D511ECF6B12004FD73F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0533D501ECF6B12004FD73F /* Assets.xcassets */; };
 		D0533D541ECF6B12004FD73F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */; };
 		D0533D5F1ECF6B12004FD73F /* MoodUp_TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0533D5E1ECF6B12004FD73F /* MoodUp_TaskTests.swift */; };
+		D0DA45F61EE29F72006D665F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DA45F51EE29F72006D665F /* ImageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		D0533D5A1ECF6B12004FD73F /* MoodUp TaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoodUp TaskTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0533D5E1ECF6B12004FD73F /* MoodUp_TaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodUp_TaskTests.swift; sourceTree = "<group>"; };
 		D0533D601ECF6B12004FD73F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0DA45F51EE29F72006D665F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				D0533D491ECF6B12004FD73F /* AppDelegate.swift */,
 				D0533D4B1ECF6B12004FD73F /* MainViewController.swift */,
 				D0166D3F1ED80A4800BDB5AE /* RecipeViewController.swift */,
+				D0DA45F51EE29F72006D665F /* ImageCollectionViewCell.swift */,
 				D0533D4D1ECF6B12004FD73F /* Main.storyboard */,
 				D0533D501ECF6B12004FD73F /* Assets.xcassets */,
 				D0533D521ECF6B12004FD73F /* LaunchScreen.storyboard */,
@@ -279,6 +282,7 @@
 			files = (
 				D0533D4C1ECF6B12004FD73F /* MainViewController.swift in Sources */,
 				D0533D4A1ECF6B12004FD73F /* AppDelegate.swift in Sources */,
+				D0DA45F61EE29F72006D665F /* ImageCollectionViewCell.swift in Sources */,
 				D0166D401ED80A4800BDB5AE /* RecipeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
