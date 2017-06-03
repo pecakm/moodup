@@ -1,41 +1,28 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import FacebookCore
 
 class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: Properties
     var alertController = UIAlertController()
     let queue = DispatchQueue(label: "queue")
-    
     @IBOutlet weak var appView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleDescription: UITextView!
     @IBOutlet weak var ingredients: UITextView!
     @IBOutlet weak var preparing: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
-
     var urls = [String]()
-/*
     var pressGestures = [UILongPressGestureRecognizer]()
-    var longPressGesture1 = UILongPressGestureRecognizer()
-    var longPressGesture2 = UILongPressGestureRecognizer()
-    var longPressGesture3 = UILongPressGestureRecognizer()*/
+    @IBOutlet weak var loginBox: UIView!
     @IBOutlet weak var loginLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
- /*       // Set press gestures
-        pressGestures = [longPressGesture1, longPressGesture2, longPressGesture3]
-        for gesture in 0...2 {
-            pressGestures[gesture] = UILongPressGestureRecognizer(target: self, action: #selector(openActionSheet(sender:)))
-            pressGestures[gesture].minimumPressDuration = 1.0
-        }
-        
-*/
         queue.async {
             self.getJSONData()
         }
@@ -58,6 +45,7 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
                 i = 0
                 for image in ((JSON as! NSDictionary)["imgs"] as! NSArray) {
                     self.urls.append(image as! String)
+                    self.pressGestures.append(UILongPressGestureRecognizer(target: self, action: #selector(self.openActionSheet(sender:))))
                 }
                 
                 self.collectionView.delegate = self
@@ -74,6 +62,9 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ImageCollectionViewCell
         
         getImage(imageURL: urls[indexPath.row], imageView: cell.imageView)
+        pressGestures[indexPath.row].minimumPressDuration = 1.0
+        cell.addGestureRecognizer(pressGestures[indexPath.row])
+        print(indexPath.row)
         
         return cell
     }
@@ -81,59 +72,47 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
     func setUI() {
         // Navigation Bar
         navigationController?.navigationBar.topItem!.title = "Pizza Recipe!"
-/*
-        // Scroll View
-        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        scrollView.contentSize.height = image3Y + image3Height + 70
-       */
         
         // FB Data Box
-        loginLabel.text = "Logged as \(MainViewController.GlobalVariable.name)"
+        if AccessToken.current != nil {
+            loginBox.isHidden = false
+            loginLabel.text = "Logged as \(MainViewController.GlobalVariable.name)"
+        }
+        else {
+            loginBox.isHidden = true
+        }
     }
-/*
+
     func setActionSheet(sender: UILongPressGestureRecognizer) {
         alertController = UIAlertController(title: "Czy chcesz zapisać obrazek?", message: nil, preferredStyle: .actionSheet)
         
         let saveImageAction = UIAlertAction(title: "Zapisz", style: .default) { (action) -> Void in
-            if sender == self.pressGestures[0] {
-                self.saveImage(imageview: self.imageViews[0])
-            }
-            else if sender == self.pressGestures[1] {
-                self.saveImage(imageview: self.imageViews[1])
-            }
-            else if sender == self.pressGestures[2] {
-                self.saveImage(imageview: self.imageViews[2])
+            for index in 0 ... self.pressGestures.count - 1 {
+                if sender == self.pressGestures[index] {
+                    let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as! ImageCollectionViewCell
+                    self.saveImage(imageview: cell.imageView)
+                }
             }
         }
-        
         alertController.addAction(saveImageAction)
         
         let cancelAction = UIAlertAction(title: "Anuluj", style: .cancel, handler: nil)
-        
         alertController.addAction(cancelAction)
     }
     
     func openActionSheet(sender: UILongPressGestureRecognizer) {
         setActionSheet(sender: sender)
-        if sender == self.pressGestures[0] {
-            let popoverController = alertController.popoverPresentationController
-            popoverController?.sourceView = self.imageViews[0]
-            popoverController?.sourceRect = self.imageViews[0].bounds
+        for index in 0 ... self.pressGestures.count - 1 {
+            if sender == self.pressGestures[index] {
+                let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as! ImageCollectionViewCell
+                let popoverController = alertController.popoverPresentationController
+                popoverController?.sourceView = cell
+                popoverController?.sourceRect = cell.bounds
+            }
         }
-        else if sender == self.pressGestures[1] {
-            let popoverController = alertController.popoverPresentationController
-            popoverController?.sourceView = self.imageViews[1]
-            popoverController?.sourceRect = self.imageViews[1].bounds
-        }
-        else if sender == self.pressGestures[2] {
-            let popoverController = alertController.popoverPresentationController
-            popoverController?.sourceView = self.imageViews[2]
-            popoverController?.sourceRect = self.imageViews[2].bounds
-        }
-
         self.present(alertController, animated: true, completion: nil)
     }
-*/    
+
     func getImage(imageURL: String, imageView: UIImageView) {
         Alamofire.request(imageURL).responseImage { response in
             
