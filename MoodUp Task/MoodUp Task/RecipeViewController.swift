@@ -6,6 +6,7 @@ import FacebookCore
 class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: Properties
+    
     var alertController = UIAlertController()
     let queue = DispatchQueue(label: "queue")
     @IBOutlet weak var appView: UIView!
@@ -18,6 +19,7 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
     var pressGestures = [UILongPressGestureRecognizer]()
     @IBOutlet weak var loginBox: UIView!
     @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
     
     
     override func viewDidLoad() {
@@ -29,6 +31,10 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
         setUI()
     }
     
+    
+    // MARK: Functions
+    
+    // Data from website
     func getJSONData() {
         Alamofire.request("http://mooduplabs.com/test/info.php").responseJSON { response in
             if let JSON = response.result.value {
@@ -54,17 +60,18 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    // Number of images in Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return urls.count
     }
     
+    // Set the cells
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ImageCollectionViewCell
         
-        getImage(imageURL: urls[indexPath.row], imageView: cell.imageView)
+        ImageFunctions().getImage(imageURL: urls[indexPath.row], imageView: cell.imageView)
         pressGestures[indexPath.row].minimumPressDuration = 1.0
         cell.addGestureRecognizer(pressGestures[indexPath.row])
-        print(indexPath.row)
         
         return cell
     }
@@ -76,7 +83,8 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
         // FB Data Box
         if AccessToken.current != nil {
             loginBox.isHidden = false
-            loginLabel.text = "Logged as \(MainViewController.GlobalVariable.name)"
+            loginLabel.text = "Logged as \(GlobalVariables.LoginBox.name)"
+            ImageFunctions().getImage(imageURL: GlobalVariables.LoginBox.profileImageURL, imageView: profileImage)
         }
         else {
             loginBox.isHidden = true
@@ -84,22 +92,26 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     func setActionSheet(sender: UILongPressGestureRecognizer) {
+        // Title
         alertController = UIAlertController(title: "Czy chcesz zapisać obrazek?", message: nil, preferredStyle: .actionSheet)
         
+        // Save option
         let saveImageAction = UIAlertAction(title: "Zapisz", style: .default) { (action) -> Void in
             for index in 0 ... self.pressGestures.count - 1 {
                 if sender == self.pressGestures[index] {
                     let cell = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as! ImageCollectionViewCell
-                    self.saveImage(imageview: cell.imageView)
+                    ImageFunctions().saveImage(imageview: cell.imageView, viewController: self)
                 }
             }
         }
         alertController.addAction(saveImageAction)
         
+        // Cancel option
         let cancelAction = UIAlertAction(title: "Anuluj", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
     }
     
+    //
     func openActionSheet(sender: UILongPressGestureRecognizer) {
         setActionSheet(sender: sender)
         for index in 0 ... self.pressGestures.count - 1 {
@@ -112,27 +124,8 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         self.present(alertController, animated: true, completion: nil)
     }
-
-    func getImage(imageURL: String, imageView: UIImageView) {
-        Alamofire.request(imageURL).responseImage { response in
-            
-            if let image = response.result.value {
-                imageView.image = image
-            }
-        }
-    }
     
-    func saveImage(imageview: UIImageView) {
-        let imageData = UIImagePNGRepresentation(imageview.image!)
-        let compressedImage = UIImage(data: imageData!)
-        UIImageWriteToSavedPhotosAlbum(compressedImage!, nil, nil, nil)
-        
-        let alert = UIAlertController(title: "Done!", message: "Your image has been saved", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
+    // Set again Navigation Title
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

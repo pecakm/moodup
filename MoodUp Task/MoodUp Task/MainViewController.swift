@@ -8,13 +8,6 @@ class MainViewController: UIViewController {
     
     // MARK: Properties
     
-    // Global variables
-    struct GlobalVariable {
-        static var name = ""
-        static var profileImageURL = ""
-    }
-    
-    
     @IBOutlet weak var centerImage: UIImageView!
     @IBOutlet weak var loginBox: UIView!
     @IBOutlet weak var loginLabel: UILabel!
@@ -38,6 +31,7 @@ class MainViewController: UIViewController {
     
     // MARK: Functions
     
+    // Data about Facebook Profile
     func getFBData() {
         let params = ["fields": "name, picture"]
         let graphRequest = GraphRequest(graphPath: "me", parameters: params)
@@ -50,9 +44,10 @@ class MainViewController: UIViewController {
             case .success(let graphResponse):
                 if let responseDictionary = graphResponse.dictionaryValue {
                     self.loginLabel.text = "Logged as \(responseDictionary["name"] as! String)"
-                    GlobalVariable.name = responseDictionary["name"] as! String
-                    GlobalVariable.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
-                    self.getImage(imageURL: GlobalVariable.profileImageURL, imageView: self.profileImage)
+                    GlobalVariables.LoginBox.name = responseDictionary["name"] as! String
+                    GlobalVariables.LoginBox.profileImageURL = (((responseDictionary["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String)!
+                    
+                    ImageFunctions().getImage(imageURL: GlobalVariables.LoginBox.profileImageURL, imageView: self.profileImage)
                 }
             }
         }
@@ -73,6 +68,7 @@ class MainViewController: UIViewController {
     }
     
     func setActionSheet() {
+        // Get the recipe option
         alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let getRecipeAction = UIAlertAction(title: "Get the Recipe", style: .default) { (action) -> Void in
@@ -82,6 +78,7 @@ class MainViewController: UIViewController {
         }
         alertController.addAction(getRecipeAction)
         
+        // Login By Facebook option
         if AccessToken.current == nil {
             let logInFbAction = UIAlertAction(title: "Zaloguj przez Facebooka", style: .default) { (action) -> Void in
                 self.loginButtonClicked()
@@ -98,10 +95,12 @@ class MainViewController: UIViewController {
             alertController.addAction(logOutFbAction)
         }
         
+        // Cancel option
         let closeMenuAction = UIAlertAction(title: "Ukryj menu", style: .cancel, handler: nil)
         alertController.addAction(closeMenuAction)
     }
     
+    // Menu Button clicked
     @IBAction func showMenu(_ sender: UIButton) {
         if let popoverController = alertController.popoverPresentationController {
             popoverController.sourceView = sender
@@ -110,6 +109,7 @@ class MainViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // Login By Facebook
     func loginButtonClicked() {
         let loginManager = LoginManager()
         loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
@@ -123,15 +123,6 @@ class MainViewController: UIViewController {
                 self.loginBox.isHidden = false
                 self.menuButtonConstraint.constant = self.menuButtonConstraint.constant + self.loginBox.bounds.height
                 self.setActionSheet()
-            }
-        }
-    }
-    
-    func getImage(imageURL: String, imageView: UIImageView) {
-        Alamofire.request(imageURL).responseImage { response in
-            
-            if let image = response.result.value {
-                imageView.image = image
             }
         }
     }

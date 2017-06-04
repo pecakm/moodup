@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    // Set Status Bar Background Color
     func setStatusBarBackgroundColor(color: UIColor) {
         guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else { return }
         
