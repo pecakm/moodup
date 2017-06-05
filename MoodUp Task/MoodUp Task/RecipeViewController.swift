@@ -20,6 +20,7 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var loginBox: UIView!
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     
     
     override func viewDidLoad() {
@@ -88,6 +89,17 @@ class RecipeViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         else {
             loginBox.isHidden = true
+        }
+        
+        // View Height
+        if view.bounds.width > 350 && view.bounds.width < 400 {
+            viewHeight.constant = 1300
+        }
+        else if view.bounds.width >= 400 && view.bounds.width < 450 {
+            viewHeight.constant = 1200
+        }
+        else if view.bounds.width >= 450 {
+            viewHeight.constant = view.bounds.height - 64
         }
     }
 
