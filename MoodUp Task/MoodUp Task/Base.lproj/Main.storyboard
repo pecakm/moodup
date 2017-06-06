@@ -109,7 +109,7 @@
                         <outlet property="menuButton" destination="F1C-Ql-vHV" id="umF-eO-kyo"/>
                         <outlet property="menuButtonConstraint" destination="P8s-HA-HRb" id="38J-iU-pnl"/>
                         <outlet property="profileImage" destination="RIP-wK-eDn" id="a3j-pC-Pbe"/>
-                        <segue destination="esr-E7-56Z" kind="push" identifier="" id="4c5-w2-rqX"/>
+                        <segue destination="esr-E7-56Z" kind="push" identifier="PushToRecipeSegue" id="4c5-w2-rqX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
